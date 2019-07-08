@@ -193,5 +193,67 @@ public class Operaciones extends AccessDB {
         }
 
     }
+//------------------------------------------------------------------------------------
+    public void delete() throws SQLException {
+        
+        String SQL = null;
+        int id ;
+        System.out.println("Que desea eliminar ");
+        System.out.println("1- Usuarios");
+        System.out.println("2- Libros");
+        Scanner SC = new Scanner(System.in);
+        Integer respuesta= SC.nextInt();
+        while (respuesta.equals("") | respuesta > 2) {
+            System.out.println("Debe ingresar una opncion valida");           
+            
+        }
+        
+        switch (respuesta) {
+            case 1:
+                System.out.println("Ingrese el ID del usuario");
+                id = SC.nextInt();
+                SQL = "DELETE FROM persona WHERE Id_Persona = "+id;
+                try {
+                    this.createConection();
+                    instruccion.executeUpdate(SQL);
+                    
+                    
+                } catch (Exception e) {
+                    System.out.println("No se puedo eliminar ningun usuario con ese Id");
+                    e.printStackTrace();
+                }
+              finally {
+                    instruccion.close();
+                    conexion.close();
+                break;
+                }
+                case 2:
+                System.out.println("Ingrese el ID del libro");
+                id = SC.nextInt();
+                 SQL = "DELETE FROM libro WHERE Id_Libro = "+id;
+                try {
+                    this.createConection();
+                   instruccion.executeUpdate(SQL);
+                    
+                    
+                } catch (Exception e) {
+                    System.out.println("No se puedo eliminar ningun libro con ese ID");
+                    e.printStackTrace();
+                }
+                finally {
+                    instruccion.close();
+                    conexion.close();
 
-}
+                }
+                
+                break;
+            default:
+                System.out.println("No se eligio una opcion valida");
+        }
+            
+        }
+            
+       
+        
+    }
+
