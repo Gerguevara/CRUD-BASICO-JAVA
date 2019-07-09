@@ -52,7 +52,12 @@ public class Biblioteca {
                 }
             }
 
-                    break;        
+                    break;   
+             case "6":
+
+                    CM.addPrestamo();
+
+                    break;         
                 default:
                     System.out.println("Opcion no valida");
             }
@@ -75,6 +80,7 @@ public class Biblioteca {
         System.out.println("3- Agregar un Libro al inventario ");
         System.out.println("4- Agregar un nuevo cliente");
         System.out.println("5- eliminar un libro/cliente ");
+        System.out.println("6- Realizar un prestamo");
         System.out.println("---------------------------------");
         System.out.println("0-  Salir");
         System.out.println("");

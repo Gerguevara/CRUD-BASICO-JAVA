@@ -8,7 +8,8 @@ import java.util.Scanner;
  * @author Gerardo
  */
 public class Operaciones extends AccessDB {
-
+   Scanner SC = new Scanner(System.in);
+   int raw = 0;
     @Override
     protected void createConection() {
         super.createConection();
@@ -99,7 +100,7 @@ public class Operaciones extends AccessDB {
      */
     public void insertNewBook() {
 
-        Scanner SC = new Scanner(System.in);
+        
         System.out.println(" Ingere el nombre del nuevo libro (obligatorio) ");
 
         String nombre = SC.nextLine();
@@ -126,7 +127,7 @@ public class Operaciones extends AccessDB {
         System.out.println("Tecnologia");
 
         String categoria = SC.nextLine();
-        if (categoria.equals(null)) {
+        if (categoria.equals("")) {
             categoria = "Sin Categoria";
 
         }
@@ -135,6 +136,9 @@ public class Operaciones extends AccessDB {
         try {
             this.createConection();
             instruccion.executeUpdate(Query);
+            
+        //    raw = instruccion.getUpdateCount();
+         //   System.out.println("Clomunas afectadas: "+raw);
             System.out.println("Datos insertados correctamente!!!");
 
             instruccion.close();
@@ -152,7 +156,7 @@ public class Operaciones extends AccessDB {
      */
     public void insertCliente() {
 
-        Scanner SC = new Scanner(System.in);
+        
         System.out.println(" Ingere el nombre del nuevo cliente ");
         String nombre = SC.nextLine();
         while (nombre.equals(null) | nombre.equals("")) {
@@ -184,7 +188,8 @@ public class Operaciones extends AccessDB {
             this.createConection();
             instruccion.executeUpdate(Query);
             System.out.println("Datos insertados correctamente!!!");
-
+            raw = instruccion.getUpdateCount();
+         System.out.println("Clomunas afectadas: "+raw);
             instruccion.close();
             conexion.close();
         } catch (SQLException ex) {
@@ -201,8 +206,7 @@ public class Operaciones extends AccessDB {
         System.out.println("Que desea eliminar ");
         System.out.println("1- Usuarios");
         System.out.println("2- Libros");
-        Scanner SC = new Scanner(System.in);
-        Integer respuesta= SC.nextInt();
+       Integer respuesta= SC.nextInt();
         while (respuesta.equals("") | respuesta > 2) {
             System.out.println("Debe ingresar una opncion valida");           
             
@@ -253,7 +257,41 @@ public class Operaciones extends AccessDB {
             
         }
             
+       public void addPrestamo(){
+           System.out.println("Que tipo de prestamo desea realizar?");
+           System.out.println("1- Prestamo para un cliente ya resgistrado");
+           System.out.println("2- Prestamo para un nuevo cliente");
+           String Respuesta = SC.nextLine();
+           switch (Respuesta) {
+               case "1":
+                   System.out.println("Ingrese el Id del cliente");
+                   int id_Cliente = SC.nextByte();
+                   System.out.println("Ingrese el Id del empleado");
+                   int id_Empleado = SC.nextInt();
+                   System.out.println("Ingrese el Id del libro");
+                   int id_Libro = SC.nextInt();
+                   String SQL = "INSERT INTO prestamo (id_empleado,id_cliente,id_libro) VALUES ('"+id_Empleado+"','"+id_Cliente+"','"+id_Libro+"')";
+                   try {
+                       this.createConection();
+                       this.instruccion.executeUpdate(SQL);
+                       
+                       System.out.println("Datos Ingresados Correctamente");
+                        raw = this.instruccion.getUpdateCount();
+                       System.out.println("Columnas afectadas: "+raw);
+                       
+                       
+                   } catch (Exception e) {
+                       System.out.println(" no se pudeo realizar la accion");
+                       e.printStackTrace();
+                   }
+                           
+                   
+                   break;
+               default:
+                   throw new AssertionError();
+           }
        
+       }
         
     }
 
